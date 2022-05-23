@@ -2,6 +2,7 @@ selain->palvelin: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_s
 
 note over selain:
 Selain lähettää uuden muistiinpanon palvelimelle POST-kutsulla
+end note
 
 palvelin->selain: Stataus code 201
 
