@@ -1,0 +1,8 @@
+selain->palvelin: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over selain:
+Selaimen koodi hakee sivulta lomake-elementin ja rekisteröi sille tapahtumankäsittelijän hoitamaan tilanteen.
+Koodi luo muistiinpanon, lisää sen muistiinpanojen listalle, piirtää muistiinpanojen listan uudelleen ja lähettää uuden muistiinpanon palvelimelle.
+
+note over palvelin:
+ottaa muistiinpanon, estää sivun uudelleen lataamisen ja lähettää datan JSON-merkkijonona
