@@ -1,15 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Filter from './components/Filter.js'
 import Persons from './components/Persons.js'
 import PersonForm from './components/PersonForm.js'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ])
+  const hook = () => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }
+  const [persons, setPersons] = useState([])
+  useEffect(hook, [])
+  
   const [newPerson, setNewPerson] = useState('a new person')
   const [newNumber, setNewNumber] = useState('a new number')
   const [newSearch, setNewSearch] = useState('')
@@ -43,7 +48,7 @@ const App = () => {
   }
 
     const filtered = !newSearch ? persons : persons.filter((persons) => persons.name.toLowerCase().includes(newSearch.toLowerCase()))
-
+    
   return (
     <div>
       <h1>Phonebook</h1>
