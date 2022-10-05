@@ -11,7 +11,7 @@ const Search = ({content, handleChange}) => {
   )
 }
 
-const ListCountires = ({list, handleChange}) => {
+const ListCountires = ({list, handleChange, api_key}) => {
   if (list.length > 10) {
     return (
       <div>
@@ -23,7 +23,7 @@ const ListCountires = ({list, handleChange}) => {
   if (list.length === 1) {
 
     return (
-      <CountryInformation country={list[0]}/>
+      <CountryInformation country={list[0]} api_key={api_key}/>
     )
   }
   if (list.length === 0) {
@@ -46,7 +46,18 @@ const ListCountires = ({list, handleChange}) => {
   }
 }
 
-const CountryInformation = ({country}) => {
+const CountryInformation = ({country, api_key}) => {
+  const [weatherData,setWeatherdata] = useState([])
+  const weatherApi = "http://api.openweathermap.org/data/2.5/weather?q="+country.capital+"&appid="+api_key
+  useEffect(() => {
+    axios
+    .get(weatherApi)
+    .then(response => {
+      setWeatherdata(response.data)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+console.log(weatherData)
   return (
     <div>
       <h1>
@@ -66,6 +77,10 @@ const CountryInformation = ({country}) => {
       <svg width="200" height="200" xmlns="https://flagcdn.com/pe.svg">
       <image href={country.flags.svg} height="200" width="200" />
       </svg>
+      <h1>Weather in {country.capital}</h1>
+      <p>temperature {(weatherData.main.temp-273.15).toFixed(2)} Celcius</p>
+      <img src = {"http://openweathermap.org/img/wn/"+weatherData.weather[0].icon+"@2x.png"} alt="weatherImage"/>
+      <p>wind {weatherData.wind.speed} m/s</p>
     </div>
   )
 }
@@ -73,7 +88,7 @@ const CountryInformation = ({country}) => {
 const App = () => {
   const [countryList, SetCountryList] = useState([])
   const [content, setContent] = useState('')
-
+  const api_key = process.env.REACT_APP_API_KEY
   const handleChange = (event) => {
     event.preventDefault()
     setContent(event.target.value)
@@ -93,7 +108,7 @@ const App = () => {
       content={content}
       handleChange={(event) => handleChange(event)}
     />
-    <ListCountires list={countryList} handleChange={handleChange}
+    <ListCountires list={countryList} handleChange={handleChange} api_key={api_key}
     />
     </div>
   )
