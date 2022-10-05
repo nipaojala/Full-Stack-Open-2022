@@ -28,7 +28,6 @@ const App = () => {
   }
 
   const handleSearchChange = (event) => {
-    event.preventDefault()
     setNewSearch(event.target.value)
   }
 
@@ -39,9 +38,14 @@ const App = () => {
           name: newPerson,
           number: newNumber,
         }
-        setPersons(persons.concat(personObject))
-        setNewPerson('')
-        setNewNumber('')
+        axios
+        .post("http://localhost:3001/persons", personObject)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+          setNewPerson('')
+          setNewNumber('')
+        })
+
       } else {
         alert(`${newPerson} is already added to phonebook`);
       }
@@ -59,11 +63,11 @@ const App = () => {
 
       <h2>Add a new</h2>
       <PersonForm
-        addPerson={addPerson}
+        addPerson={(event) => addPerson(event)}
         newPerson={newPerson}
-        handleNameChange={handleNameChange}
+        handleNameChange={(event) => handleNameChange(event)}
         newNumber={newNumber}
-        handleNumberChange={handleNumberChange}
+        handleNumberChange={(event) => handleNumberChange(event)}
         />
       <h2>Numbers</h2>
       <Persons persons={filtered}

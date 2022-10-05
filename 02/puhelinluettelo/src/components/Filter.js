@@ -1,5 +1,3 @@
-
-
 const Filter = ({newSearch, handleSearch }) => {
   return (
     <form onSubmit={handleSearch}>
