@@ -1,18 +1,21 @@
-import axios from "axios";
+import axios from 'axios'
 
 const getAll = () => {
     const request = axios.get("http://localhost:3030/persons")
-    return request.then(response => {
-        return response.data
-    })}
+    console.log(request)
+    return request.then(response => response.data)
+  }
 
-//const update = () => {
-    //axios
-        //.put("http://localhost:3030/persons")
-        //.then(response => {
-            //console.log(response + "GetAllData funktiossa")
-            //return response.data
-        //})
-//}
+  const add = newObject =>{
+    const request = axios.post("http://localhost:3030/persons",newObject)
+    return request.then(response => response.data)
+  
+  }
 
-export default getAll
+  const deleteElement = personId => {
+    const request = axios.delete("http://localhost:3030/persons/"+ personId)
+    return request.then(response => response.data)
+  
+  }
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {deleteElement, add, getAll}

@@ -1,23 +1,27 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import Filter from './components/Filter.js'
-import Persons from './components/Persons.js'
-import PersonForm from './components/PersonForm.js'
+import Filter from './components/Filter'
+import Persons from './components/Persons'
+import PersonForm from './components/PersonForm'
+import serverHandling from './components/serverHandling'
+
 
 const App = () => {
-  const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
-  }
   const [persons, setPersons] = useState([])
-  useEffect(hook, [])
-  
-  const [newPerson, setNewPerson] = useState('a new person')
-  const [newNumber, setNewNumber] = useState('a new number')
+  const [newPerson, setNewPerson] = useState('')
+  const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
+
+  const hook = () => {
+    serverHandling
+    .getAll()
+    .then(initialPersons =>{
+      setPersons(initialPersons)
+    })
+  }
+
+  useEffect(hook,[])
+
 
   const handleNameChange = (event) => {
     setNewPerson(event.target.value)
@@ -38,20 +42,28 @@ const App = () => {
           name: newPerson,
           number: newNumber,
         }
-        axios
-        .post("http://localhost:3001/persons", personObject)
+        serverHandling
+        .add(personObject)
         .then(response => {
-          setPersons(persons.concat(response.data))
-          setNewPerson('')
-          setNewNumber('')
+          setPersons(persons.concat(response))
         })
-
+        setNewPerson('')
+        setNewNumber('')
       } else {
         alert(`${newPerson} is already added to phonebook`);
       }
+      setNewPerson('')
+      setNewNumber('')
   }
+  const deletePerson = (event) => {
+    serverHandling
+    .deleteElement(event.target.value)
 
-    const filtered = !newSearch ? persons : persons.filter((persons) => persons.name.toLowerCase().includes(newSearch.toLowerCase()))
+    const updatedList = persons.filter(element => element.id !== event.target.value)
+    setPersons(updatedList)
+    console.log(updatedList, persons)
+  }
+  const filtered = !newSearch ? persons : persons.filter((persons) => persons.name.toLowerCase().includes(newSearch.toLowerCase()))
     
   return (
     <div>
@@ -70,7 +82,7 @@ const App = () => {
         handleNumberChange={(event) => handleNumberChange(event)}
         />
       <h2>Numbers</h2>
-      <Persons persons={filtered}
+      <Persons persons={filtered} deletePerson={(event) => deletePerson(event)}
       />
 
     </div>
