@@ -56,12 +56,16 @@ const App = () => {
       setNewNumber('')
   }
   const deletePerson = (event) => {
-    serverHandling
-    .deleteElement(event.target.value)
+    const person = persons.find(n => n.name === event.target.value)
+    if(window.confirm("Do you want to delete " + person.name)) {
+      serverHandling
+      .deleteElement(person.id)
+      const updatedList = persons.filter(element => element.id !== person.id)
+      setPersons(updatedList)
+    } else {
+      console.log("Person not deleted")
+    }
 
-    const updatedList = persons.filter(element => element.id !== event.target.value)
-    setPersons(updatedList)
-    console.log(updatedList, persons)
   }
   const filtered = !newSearch ? persons : persons.filter((persons) => persons.name.toLowerCase().includes(newSearch.toLowerCase()))
     

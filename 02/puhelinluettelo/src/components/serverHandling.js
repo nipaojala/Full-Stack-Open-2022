@@ -12,8 +12,8 @@ const getAll = () => {
   
   }
 
-  const deleteElement = personId => {
-    const request = axios.delete("http://localhost:3030/persons/"+ personId)
+  const deleteElement = person => {
+    const request = axios.delete("http://localhost:3030/persons/"+ person)
     return request.then(response => response.data)
   
   }
