@@ -37,7 +37,8 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-      if (!persons.find(element => element.name === newPerson)) {
+    const person = persons.find(element => element.name === newPerson)
+      if (!person) {
         const personObject = {
           name: newPerson,
           number: newNumber,
@@ -50,10 +51,27 @@ const App = () => {
         setNewPerson('')
         setNewNumber('')
       } else {
-        alert(`${newPerson} is already added to phonebook`);
+        if (window.confirm(`${newPerson} is already added to phonebook, replace the old number with a new one?`)) {
+          const personObject = {
+            id: person.id,
+            name: newPerson,
+            number: newNumber,
+          }
+          serverHandling
+            .updatePerson(personObject)
+        }
+        const updatedList = persons
+        updatedList.forEach((element) => {
+          if (element.name === person.name) {
+            element.number = newNumber
+          }
+          setPersons(updatedList)
+
+        })
+        setNewPerson('')
+        setNewNumber('')
       }
-      setNewPerson('')
-      setNewNumber('')
+
   }
   const deletePerson = (event) => {
     const person = persons.find(n => n.name === event.target.value)

@@ -12,10 +12,16 @@ const getAll = () => {
   
   }
 
-  const deleteElement = person => {
-    const request = axios.delete("http://localhost:3030/persons/"+ person)
+  const deleteElement = personId => {
+    const request = axios.delete("http://localhost:3030/persons/"+ personId)
+    return request.then(response => response.data)
+  
+  }
+
+  const updatePerson = person => {
+    const request = axios.put("http://localhost:3030/persons/"+ person.id, person)
     return request.then(response => response.data)
   
   }
 // eslint-disable-next-line import/no-anonymous-default-export
-export default {deleteElement, add, getAll}
+export default {deleteElement, add, getAll, updatePerson}
