@@ -11,7 +11,7 @@ const App = () => {
   const [newPerson, setNewPerson] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
-
+  const [errorMessage, setErrorMessage] = useState(null)
   const hook = () => {
     serverHandling
     .getAll()
@@ -47,10 +47,18 @@ const App = () => {
         .add(personObject)
         .then(response => {
           setPersons(persons.concat(response))
+          setErrorMessage("Adding " + personObject.name + " was succesful")
         })
+        .catch(error => {
+          setErrorMessage(
+            `Something happened`)
+          })
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         setNewPerson('')
         setNewNumber('')
-      } else {
+     } else {
         if (window.confirm(`${newPerson} is already added to phonebook, replace the old number with a new one?`)) {
           const personObject = {
             id: person.id,
@@ -59,7 +67,11 @@ const App = () => {
           }
           serverHandling
             .updatePerson(personObject)
+            setErrorMessage("Number was updated for user " + person.name)
         }
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
         const updatedList = persons
         updatedList.forEach((element) => {
           if (element.name === person.name) {
@@ -78,6 +90,10 @@ const App = () => {
     if(window.confirm("Do you want to delete " + person.name)) {
       serverHandling
       .deleteElement(person.id)
+      setErrorMessage("Deleted user " + person.name)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
       const updatedList = persons.filter(element => element.id !== person.id)
       setPersons(updatedList)
     } else {
@@ -85,11 +101,25 @@ const App = () => {
     }
 
   }
+
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+  
+    return (
+      <div className="error">
+        {message}
+      </div>
+    )
+  }
+
   const filtered = !newSearch ? persons : persons.filter((persons) => persons.name.toLowerCase().includes(newSearch.toLowerCase()))
     
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={errorMessage} />
       <Filter
         filterBy={newSearch}
         handleSearch={(event) => handleSearchChange(event)}
