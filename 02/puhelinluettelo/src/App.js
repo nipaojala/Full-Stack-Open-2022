@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
@@ -88,20 +87,20 @@ const App = () => {
 
   }
   const deletePerson = (event) => {
-    let moi = null
+    let errors = null
     const person = persons.find(n => n.name === event.target.value)
     if(window.confirm("Do you want to delete " + person.name)) {
       serverHandling
       .deleteElement(person.id)
       .catch(error => {
-        moi = "jotain"
+        errors = "some error"
         setErrorMessage2(person.name + " was already removed from server!")
         setErrorMessage(null)
         setTimeout(() => {
           setErrorMessage2(null)
         }, 5000)
       })
-      if (!moi) {
+      if (!errors) {
         setErrorMessage("Deleted user " + person.name)
         setTimeout(() => {
           setErrorMessage(null)
