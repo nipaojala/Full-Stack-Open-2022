@@ -12,6 +12,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage2, setErrorMessage2] = useState(null)
+
   const hook = () => {
     serverHandling
     .getAll()
@@ -86,20 +88,43 @@ const App = () => {
 
   }
   const deletePerson = (event) => {
+    let moi = null
     const person = persons.find(n => n.name === event.target.value)
     if(window.confirm("Do you want to delete " + person.name)) {
       serverHandling
       .deleteElement(person.id)
-      setErrorMessage("Deleted user " + person.name)
-      setTimeout(() => {
+      .catch(error => {
+        moi = "jotain"
+        setErrorMessage2(person.name + " was already removed from server!")
         setErrorMessage(null)
-      }, 5000)
+        setTimeout(() => {
+          setErrorMessage2(null)
+        }, 5000)
+      })
+      if (!moi) {
+        setErrorMessage("Deleted user " + person.name)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      }
       const updatedList = persons.filter(element => element.id !== person.id)
       setPersons(updatedList)
     } else {
       console.log("Person not deleted")
     }
 
+  }
+
+  const ErrorNotification = ({ message }) => {
+    if (message) {
+      return (
+        <div className="error2">
+          {message}
+        </div>
+      )
+    } else {
+      return null
+    }
   }
 
   const Notification = ({ message }) => {
@@ -119,6 +144,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <ErrorNotification message={errorMessage2} />
       <Notification message={errorMessage} />
       <Filter
         filterBy={newSearch}
