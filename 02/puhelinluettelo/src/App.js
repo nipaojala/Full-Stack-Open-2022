@@ -100,6 +100,7 @@ const App = () => {
           setErrorMessage2(null)
         }, 5000)
       })
+      console.log(errors)
       if (!errors) {
         setErrorMessage("Deleted user " + person.name)
         setTimeout(() => {
