@@ -3,15 +3,16 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const config = require('./utils/config')
+const logger = require('./utils/logger')
 const blogRouter = require('./controllers/blogController')
 
-console.log('Connecting to ' + config.MONGODB_URI)
+logger.info('Connecting to ' + config.MONGODB_URI)
 mongoose.connect(config.MONGODB_URI)
   .then(() => {
-    console.log('connected to MongoDB')
+    logger.info('connected to MongoDB')
   })
   .catch((error) => {
-    console.log('error connection to MongoDB:', error.message)
+    logger.error('error connection to MongoDB:', error.message)
   })
 
 app.use(cors())
