@@ -49,13 +49,16 @@ const App = () => {
         .then(response => {
           setPersons(persons.concat(response))
           setErrorMessage("Adding " + personObject.name + " was succesful")
-        })
-        .catch(error => {
-          setErrorMessage(
-            `Something happened`)
-          })
           setTimeout(() => {
             setErrorMessage(null)
+          }, 5000)
+        })
+        .catch(error => {
+          setErrorMessage2(
+            error.response.data.error)
+          })
+          setTimeout(() => {
+            setErrorMessage2(null)
           }, 5000)
         setNewPerson('')
         setNewNumber('')
