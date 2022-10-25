@@ -9,6 +9,18 @@ const totalLikes = (blogs) => {
   })
   return count
 }
+
+const favoriteBlog = (blogs) => {
+  let likes = []
+  blogs.forEach(element => {
+    likes = likes.concat(element.likes)
+  })
+  console.log(likes)
+  const max = Math.max(...likes)
+  console.log(max)
+  return max
+}
+
 module.exports = {
-  dummy, totalLikes
+  dummy, totalLikes, favoriteBlog
 }
