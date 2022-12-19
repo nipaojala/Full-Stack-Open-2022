@@ -17,19 +17,19 @@ const exerciseCalculator = (args: Array<number>, rating: number): ReturnValues =
     avg = avg + element;
   });
   avg = avg / args.length;
-  const trainingDays = args.filter(x => x != 0)
+  const trainingDays = args.filter(x => x != 0);
 
   if (rating <= avg && avg <= rating + 2) {
-    description = "Good but it could be better"
-    success = true
-    weeklyRating = 2
+    description = "Good but it could be better";
+    success = true;
+    weeklyRating = 2;
   } else if (rating + 2 < avg) {
-    description = "Awesome"
-    success = true
-    weeklyRating = 3
+    description = "Awesome";
+    success = true;
+    weeklyRating = 3;
   } else {
-    description = "bad!"
-    weeklyRating = 1
+    description = "bad!";
+    weeklyRating = 1;
   }
   return {
     periodLength: args.length,
@@ -40,6 +40,8 @@ const exerciseCalculator = (args: Array<number>, rating: number): ReturnValues =
     target: rating,
     average: avg
   };
-}
+};
 
-console.log(exerciseCalculator([3, 0, 2, 4.5, 0, 3, 1], -5))
+console.log(exerciseCalculator([3, 0, 2, 4.5, 0, 3, 1], -5));
+
+export default exerciseCalculator;

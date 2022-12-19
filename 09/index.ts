@@ -1,5 +1,7 @@
 import express from 'express';
 import CalculateBmi from './bmiCalculator';
+import calculator from './file';
+
 const app = express();
 const PORT = 3000;
 
@@ -17,9 +19,23 @@ app.get("/bmi", (req, res) => {
     height: height,
     bmi: bmi});
   } else {
-    res.send({error: "malformatted parameters"})
+    res.send({error: "malformatted parameters"});
   }
 
+});
+
+app.post('/calculate', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { value1, value2, op } = req.body;
+
+  if ( !value1 || isNaN(Number(value1))) {
+    return res.status(400).send({ error: '...'});
+  }
+  // more validations here...
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  const result = calculator(Number(value1), Number(value2), op);
+  return res.send(result);
 });
 
 app.listen(PORT, () => {
