@@ -1,4 +1,4 @@
-const calculateBmi = (height:number, weight:number) => {
+const CalculateBmi = (height:number, weight:number) => {
   if (!isNaN(Number(height)) && !isNaN(Number(weight)) || height == 0 || weight == 0 ) {
     height = height*0.01
     const bmi: number = (weight)/(height*height)
@@ -18,4 +18,4 @@ const calculateBmi = (height:number, weight:number) => {
   }
 }
 
-console.log(calculateBmi(180, 75))
+export default CalculateBmi
