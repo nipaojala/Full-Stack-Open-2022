@@ -1,13 +1,20 @@
-export interface DiaryEntry {
-  id: number;
-  date: string;
-  weather: Weather;
-  visibility: Visibility;
-  comment?: string;
+export interface Patients {
+  id: string;
+  name: string;
+  dateOfBirth: string;
+  ssn?: string;
+  gender: string;
+  occupation: string;
 }
 
-export type NonSensitiveDiaryEntry = Omit<DiaryEntry, 'comment'>;
+export interface Diagnose {
+  code: string;
+  name: string;
+  latin?: string;
+}
 
-export type Weather = 'sunny' | 'rainy' | 'cloudy' | 'windy' | 'stormy';
+// export type NonSensitiveDiaryEntry = Omit<DiaryEntry, 'comment'>;
 
-export type Visibility = 'great' | 'good' | 'ok' | 'poor';
+// export type Weather = 'sunny' | 'rainy' | 'cloudy' | 'windy' | 'stormy';
+
+export type NonSensitivePatientData = Omit<Patients, 'ssn'>;
