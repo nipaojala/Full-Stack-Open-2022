@@ -2,8 +2,8 @@ export interface Patients {
   id: string;
   name: string;
   dateOfBirth: string;
-  ssn?: string;
-  gender: string;
+  ssn: string;
+  gender: Gender;
   occupation: string;
 }
 
@@ -13,8 +13,12 @@ export interface Diagnose {
   latin?: string;
 }
 
-// export type NonSensitiveDiaryEntry = Omit<DiaryEntry, 'comment'>;
-
-// export type Weather = 'sunny' | 'rainy' | 'cloudy' | 'windy' | 'stormy';
+export enum Gender{
+  Female = "female",
+  Male = "male",
+  Other = "other"
+}
 
 export type NonSensitivePatientData = Omit<Patients, 'ssn'>;
+
+export type NewPatient = Omit<Patients, 'id'>;
