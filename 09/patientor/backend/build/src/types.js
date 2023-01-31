@@ -5,4 +5,5 @@ var Gender;
 (function (Gender) {
     Gender["Female"] = "female";
     Gender["Male"] = "male";
+    Gender["Other"] = "other";
 })(Gender = exports.Gender || (exports.Gender = {}));

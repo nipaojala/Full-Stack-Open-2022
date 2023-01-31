@@ -24,6 +24,10 @@ const getAllPatientData = () :NonSensitivePatientData[] => {
       occupation}));
 };
 
+const GetSinglePatientData = (id: string) :Patients[] => {
+  return patientEntries.filter(element => element.id == id);
+};
+
 const addPatient = (entry: NewPatient): Patients => {
 
     const newPatientId = uuidv4();
@@ -39,5 +43,6 @@ const addPatient = (entry: NewPatient): Patients => {
 export default {
   addPatient,
   getAllDiagnoseData,
-  getAllPatientData
+  getAllPatientData,
+  GetSinglePatientData
 };

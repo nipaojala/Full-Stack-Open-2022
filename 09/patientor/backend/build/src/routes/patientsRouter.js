@@ -25,4 +25,7 @@ router.post('/', (req, res) => {
         res.status(400).send(errorMessage);
     }
 });
+router.get('/:id', (req, res) => {
+    res.send(diagnoseService_1.default.GetSinglePatientData(req.params.id));
+});
 exports.default = router;

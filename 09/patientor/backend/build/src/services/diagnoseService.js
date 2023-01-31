@@ -19,6 +19,25 @@ const getAllPatientData = () => {
         gender,
         occupation }));
 };
+const GetSinglePatientData = (id) => {
+    return patients_1.default.filter(element => element.id == id);
+    // return patientEntries.map(({
+    //   name,
+    //   ssn,
+    //   occupation,
+    //   dateOfBirth,
+    //   gender,
+    //   entries,
+    //   id}) => ({
+    //     name,
+    //     ssn,
+    //     occupation,
+    //     dateOfBirth,
+    //     gender,
+    //     entries,
+    //     id
+    //   }));
+};
 const addPatient = (entry) => {
     const newPatientId = (0, uuid_1.v4)();
     const newPatientEntry = Object.assign({ id: newPatientId }, entry);
@@ -28,5 +47,6 @@ const addPatient = (entry) => {
 exports.default = {
     addPatient,
     getAllDiagnoseData,
-    getAllPatientData
+    getAllPatientData,
+    GetSinglePatientData
 };
