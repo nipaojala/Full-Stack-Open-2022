@@ -9,7 +9,12 @@ export type Action =
   | {
       type: "ADD_PATIENT";
       payload: Patient;
-    };
+    }
+  | {
+      type: "UPDATE_PATIENT";
+      payload: Patient;
+  };
+  
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -32,6 +37,13 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
+    case "UPDATE_PATIENT":
+      return {
+        ...state,
+        patients: {
+          ...state.patients
+        }
+      }; // update patient on vajaavainen(muuta lisätty on route app.tsx Singlepatietnlist page)
     default:
       return state;
   }
