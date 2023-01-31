@@ -1,10 +1,9 @@
 module.exports = {
   'env': {
-    'browser': true,
+    'node': true,
     'commonjs': true,
     'es2021': true,
-    'node': true,
-    'jest': true
+    'jest': true,
   },
   'extends': 'eslint:recommended',
   'overrides': [
@@ -17,7 +16,6 @@ module.exports = {
       'error',
       2
     ],
-    'eqeqeq': 'error',
     'linebreak-style': [
       'error',
       'unix'
@@ -30,13 +28,14 @@ module.exports = {
       'error',
       'never'
     ],
-    'arrow-spacing': [
-      'error', { 'before': true, 'after': true }
-    ],
+    'eqeqeq': 'error',
     'no-trailing-spaces': 'error',
     'object-curly-spacing': [
       'error', 'always'
     ],
-    'no-console': 0
+    'arrow-spacing': [
+      'error', { 'before': true, 'after': true }
+    ],
+    'no-console': 0,
   }
 }
