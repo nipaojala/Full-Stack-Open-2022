@@ -11,6 +11,12 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
 
+
+  useEffect(() =>{
+    const user = window.localStorage.getItem('loggedUser')
+    if (user) setUser(JSON.parse(user))
+  }, [])
+
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
@@ -23,6 +29,9 @@ const App = () => {
       console.log({username, password})
       const user = await login.login({username, password})
       setUser(user)
+      window.localStorage.setItem(
+        "loggedUser", JSON.stringify(user)
+      )
       setUsername('')
       setPassword('')
     } catch (exception) {
@@ -42,6 +51,12 @@ const App = () => {
   //     </form>
   //   )
   // }
+
+const handleLogout = () => {
+  window.localStorage.removeItem('loggedUser')
+  setUser(null)
+  
+}
 
   const loginForm = () => {
     return (
@@ -68,6 +83,7 @@ const App = () => {
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
+      <button onClick={handleLogout}>logout</button>
       </div>
     )
   }
