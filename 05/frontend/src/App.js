@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
-import blogService from './services/blogs'
+import blogService from './services/blogService'
 import login from './services/login'
 import Notification from './components/Notification'
 
@@ -10,6 +10,10 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
+
+  const [title, setTitle] = useState('')
+  const [url, setUrl] = useState('')
+  const [author, setAuthor] = useState('')
 
 
   useEffect(() =>{
@@ -22,6 +26,43 @@ const App = () => {
       setBlogs( blogs )
     )  
   }, [])
+
+
+const createBlog = () => {
+  const newBlogObj = {
+    title: title,
+    url: url,
+    author: author
+  }
+  console.log(newBlogObj)
+  blogService.create(newBlogObj, user.token)
+  // setAuthor('')
+  // setTitle('')
+  // setUrl('')
+}
+
+  const addForm = () => {
+    return (
+      <div>
+        <h2>Add blog</h2>
+        <form onSubmit={createBlog}>
+          <div>
+            Title
+            <input type="text" name={"Title"} value={title} onChange={({target}) => setTitle(target.value)}></input>
+          </div>
+          <div>
+            Url
+            <input type="text" name={"Url"} value={url} onChange={({target}) => setUrl(target.value)}></input>
+          </div>
+          <div>
+            Author
+            <input type="text" name={"Author"} value={author} onChange={({target}) => setAuthor(target.value)}></input>
+          </div>
+          <button type="submit">Add blog</button>
+        </form>
+      </div>
+    )
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -36,7 +77,6 @@ const App = () => {
       setPassword('')
     } catch (exception) {
       setError('wrong credentials')
-      setError("mdofmdofdof")
       console.log(error)
       setTimeout(() => {
         setError(null)
@@ -44,18 +84,10 @@ const App = () => {
       }
     }
 
-  // const blogForm = () => {
-  //   return (
-  //     <form>
-  //       <input name="newBlog"
-  //     </form>
-  //   )
-  // }
-
 const handleLogout = () => {
   window.localStorage.removeItem('loggedUser')
   setUser(null)
-  
+
 }
 
   const loginForm = () => {
@@ -78,11 +110,11 @@ const handleLogout = () => {
   const blogList = (user) => {
     return (
       <div>
-      <h2>blogs</h2>
-      <p>{user.name} logged in </p>
+      <br/>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
+      <br/>
       <button onClick={handleLogout}>logout</button>
       </div>
     )
@@ -92,6 +124,7 @@ const handleLogout = () => {
       <Notification errorMessage={error}/>
 
       {!user && loginForm()}
+      {user && <div><h1>Blogs!</h1> Logged in as {user.name} {addForm()}</div>}
       {user && blogList(user)}
     </div>
   )

@@ -10,15 +10,15 @@ const personSchema = new mongoose.Schema({
   number: {
     minlength: 8,
     type: String,
-    required: true,
-    validate: {
-      validator: function(v) {
-        return (/(0([1-9]{1,2})-([0-9]))|(0([0-9]{2})-([0-9]))/).test(v)
+    // required: true,
+    // validate: {
+    //   validator: function(v) {
+    //     return (/(0([1-9]{1,2})-([0-9]))|(0([0-9]{2})-([0-9]))/).test(v)
 
-      },
-      message: props => `${props.value} is not a valid phone number! Number must be
-            formatted like XXX-XX... or XX-XX... totally 8 numbers atleast`
-    }
+    //   },
+    //   message: props => `${props.value} is not a valid phone number! Number must be
+    //         formatted like XXX-XX... or XX-XX... totally 8 numbers atleast`
+    // }
   }
 })
 

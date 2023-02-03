@@ -16,7 +16,7 @@ router.post('/', async (request, response) => {
   if (!request.user) {
     return response.status(401).json({ text: 'token missing or invalid', type: 'failure' })
   }
-
+  console.log(request.body)
   const user = request.user
   const blog = new Bloglist({ ...request.body, user: user.id })
 

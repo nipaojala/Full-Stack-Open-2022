@@ -3,12 +3,10 @@
 const personRouter = require('express').Router()
 const Person = require('../models/person')
 
-personRouter.get('/', (_req, res) => {
-  Person.find({}).then(persons => {
-    res.json(persons)
-  })
+personRouter.get('/', async (_req, res) => {
+  const persons = await Person.find({})
+  res.json(persons)
 })
-
 personRouter.get('/info', (_req, res) => {
   Person.find({}).then(person => {
     res.send(`Phonebook has info for ${person.length} people<br>${new Date()}`)
