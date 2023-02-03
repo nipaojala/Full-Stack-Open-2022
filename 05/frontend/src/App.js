@@ -17,28 +17,43 @@ const App = () => {
 
 
   useEffect(() =>{
+    console.log("map user")
     const user = window.localStorage.getItem('loggedUser')
     if (user) setUser(JSON.parse(user))
   }, [])
 
   useEffect(() => {
+    console.log("map blogs")
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
   }, [])
 
 
-const createBlog = () => {
+const createBlog = (event) => {
+  event.preventDefault()
   const newBlogObj = {
     title: title,
     url: url,
     author: author
   }
-  console.log(newBlogObj)
   blogService.create(newBlogObj, user.token)
-  // setAuthor('')
-  // setTitle('')
-  // setUrl('')
+  .then(returnedBlog => {
+    setBlogs(blogs.concat(returnedBlog))
+    setAuthor('')
+    setTitle('')
+    setUrl('')
+    setError("adding blog was succesful")
+    setTimeout(() => {
+      setError(null)
+    }, 5000)
+  })
+  .catch(exception => {
+    setError('something happened')
+    setTimeout(() => {
+      setError(null)
+    }, 5000)
+  })
 }
 
   const addForm = () => {
@@ -77,7 +92,6 @@ const createBlog = () => {
       setPassword('')
     } catch (exception) {
       setError('wrong credentials')
-      console.log(error)
       setTimeout(() => {
         setError(null)
       }, 5000)
