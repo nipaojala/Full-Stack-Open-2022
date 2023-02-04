@@ -8,6 +8,7 @@ const AddForm = (props) => {
 
   const createBlog = (event) => {
     event.preventDefault()
+    props.addFormRef.current.toggleVisibility()
     const newBlogObj = {
       title: title,
       url: url,
@@ -31,7 +32,7 @@ const AddForm = (props) => {
       }, 5000)
     })
   }
-
+  
   return (
     <div>
       <h2>Add blog</h2>

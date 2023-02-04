@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogService'
 import login from './services/login'
@@ -13,6 +13,8 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
+
+  const addFormRef = useRef()
 
   useEffect(() =>{
     console.log("map user")
@@ -76,7 +78,9 @@ const handleLogout = () => {
         setBlogs={setBlogs}
       /></Togglable>}
       {user && <div><h1>Blogs!</h1> Logged in as {user.name}</div>}
-      {user && <Togglable buttonLabel="create"><AddForm 
+      {user && <Togglable buttonLabel="create" ref={addFormRef}>
+        <AddForm
+          addFormRef={addFormRef}
           blogs={blogs}
           setBlogs={setBlogs}
           setError={setError}
