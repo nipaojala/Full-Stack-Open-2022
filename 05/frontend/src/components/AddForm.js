@@ -50,7 +50,6 @@ const AddForm = (props) => {
         </div>
         <button type="submit">Add blog</button>
       </form>
-      {/* <button onClick={setVisibility(false)}>cancel</button> */}
     </div>
   )
 }

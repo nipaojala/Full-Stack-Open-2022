@@ -76,12 +76,12 @@ const handleLogout = () => {
         setBlogs={setBlogs}
       /></Togglable>}
       {user && <div><h1>Blogs!</h1> Logged in as {user.name}</div>}
-      {user && <AddForm 
+      {user && <Togglable buttonLabel="create"><AddForm 
           blogs={blogs}
           setBlogs={setBlogs}
           setError={setError}
           user={user}
-      />}
+      /></Togglable>}
       {user && blogList(user)}
     </div>
   )
