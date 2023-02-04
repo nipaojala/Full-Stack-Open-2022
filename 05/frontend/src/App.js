@@ -5,6 +5,7 @@ import login from './services/login'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import AddForm from './components/AddForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -12,9 +13,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
-
-  const [visibility, setVisibility] = useState(false)
-
 
   useEffect(() =>{
     console.log("map user")
@@ -69,16 +67,14 @@ const handleLogout = () => {
   return (
     <div>
       <Notification errorMessage={error}/>
-      {!user && <LoginForm
-        setVisibility={setVisibility}
+      {!user && <Togglable buttonLabel="login"><LoginForm
         username={username}
         setUsername={setUsername}
         password={password}
         setPassword={setPassword}
         handleLogin={handleLogin}
         setBlogs={setBlogs}
-        visibility={visibility}
-      />}
+      /></Togglable>}
       {user && <div><h1>Blogs!</h1> Logged in as {user.name}</div>}
       {user && <AddForm 
           blogs={blogs}
