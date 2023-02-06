@@ -17,12 +17,12 @@ useImperativeHandle(ref, () => {
 })
   return (
     <div>
-      <div style={showWhenVisible}>
-        {props.children}
-        <button onClick={() => setVisibility(false)}>cancel</button>
-      </div>
       <div style={hideWhenVisible}>
         <button onClick={() => setVisibility(true)}>{props.buttonLabel}</button>
+      </div>
+      <div style={showWhenVisible}>
+      {props.children}
+        <button onClick={() => setVisibility(false)}>cancel</button>
       </div>
     </div>
   )

@@ -1,12 +1,12 @@
 import Togglable from "./Togglable"
 
-const Blog = ({blog, userName, handleLikeCount}) => {
+const Blog = ({blog, handleLikeCount, handleDelete}) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
     border: 'solid',
     borderWidth: 1,
-    marginBottom: 5
+    marginBottom: 5,
     
   }
   return (
@@ -17,6 +17,7 @@ const Blog = ({blog, userName, handleLikeCount}) => {
       {blog.url}<br/>
       {blog.likes}<button onClick={() => handleLikeCount(blog)}>like</button><br/>
       {blog.user.name}<br/>
+      <button onClick={() => handleDelete(blog)}>remove</button><br/>
     </Togglable>
   </div>  
   )

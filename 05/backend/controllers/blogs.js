@@ -28,7 +28,9 @@ router.post('/', async (request, response) => {
 })
 
 router.delete('/:id', async (request, response) => {
+  console.log(request.user.id)
   const blogToDelete = await Bloglist.findById(request.params.id)
+  console.log(request.body)
   if (!blogToDelete ) {
     return response.status(204).end()
   }

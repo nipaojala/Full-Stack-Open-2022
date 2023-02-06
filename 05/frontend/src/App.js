@@ -83,6 +83,23 @@ const handleLikeCount = (blog) => {
     })
   }
 
+  const handleDelete = (blog) => {
+    if (window.confirm(`Removing blog ${blog.title} by ${blog.author}`)) {   
+    blogService.deleteBlog(user.token, blog)
+    .then(returnedMessage => {
+      console.log(blogs)
+      setBlogs(blogs.filter(element => element.id !== blog.id))
+      console.log(blogs)
+    })
+    .catch(error => {
+      setError("removing blog post failed")
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
+      })
+    }
+  }
+
   const blogList = (user) => {
     const sortedBlogs = blogs.filter(element => element.user).sort((a, b) => (b.likes - a.likes))
     return (
@@ -91,10 +108,9 @@ const handleLikeCount = (blog) => {
         {sortedBlogs.map(blog =>
           <Blog key={blog.id} blog={blog}
             userName={user.name}
-            handleLikeCount={handleLikeCount} />
+            handleLikeCount={handleLikeCount}
+            handleDelete={handleDelete} />
         )}
-        <br/>
-        <button onClick={handleLogout}>logout</button>
       </div>
     )
   }
@@ -109,7 +125,7 @@ const handleLikeCount = (blog) => {
         handleLogin={handleLogin}
         setBlogs={setBlogs}
       /></Togglable>}
-      {user && <div><h1>Blogs!</h1> Logged in as {user.name}</div>}
+      {user && <div><h1>Blogs!</h1> Logged in as {user.name} <button onClick={handleLogout}>logout</button></div>}
       {user && <Togglable buttonLabel="create" ref={addFormRef}>
         <AddForm
           addFormRef={addFormRef}
