@@ -12,7 +12,8 @@ const AddForm = (props) => {
     const newBlogObj = {
       title: title,
       url: url,
-      author: author
+      author: author,
+      likes: 0
     }
     blogService.create(newBlogObj, props.user.token)
     .then(returnedBlog => {

@@ -1,0 +1,10 @@
+PUT http://localhost:3003/api/blogs/63e038ac8bc4ef3d7baba799
+Content-Type: application/json
+
+{
+"title": "dfdf",
+"url": "dfdf",
+"author": "dfd",
+"likes": 2,
+"user": "63da9d104ee6b4994d3db481"
+}

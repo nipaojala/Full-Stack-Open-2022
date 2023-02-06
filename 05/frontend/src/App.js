@@ -54,15 +54,47 @@ const handleLogout = () => {
 
 }
 
+const handleLikeCount = (blog) => {
+  blog.likes = blog.likes + 1
+  blogService.updateLikes(user.token, blog)
+  .then(returnedBlog => {
+    console.log(returnedBlog)
+    const updatedLikes = {
+      title: returnedBlog.title,
+      url: returnedBlog.url,
+      author: returnedBlog.author,
+      likes: returnedBlog.likes,
+      user: {
+      username: user.username,
+      name: user.name,
+      id: returnedBlog.user
+      },
+      id: blog.id
+
+    }
+    setBlogs(blogs.map(element => element.id !== blog.id ? element :updatedLikes))
+  })
+  .catch(error => {
+    console.log(error)
+    setError('Adding like didnt work')
+    setTimeout(() => {
+      setError(null)
+    }, 5000)
+    })
+  }
+
   const blogList = (user) => {
+    const sortedBlogs = blogs.filter(element => element.user).sort((a, b) => (b.likes - a.likes))
     return (
       <div>
-      <br/>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
-      <br/>
-      <button onClick={handleLogout}>logout</button>
+        <br/>
+        {sortedBlogs.map(blog =>
+          <Blog key={blog.id} blog={blog}
+            userName={user.name}
+            handleLikeCount={handleLikeCount} />
+        )}
+        <br/>
+        <button onClick={handleLogout}>logout</button>
       </div>
     )
   }
