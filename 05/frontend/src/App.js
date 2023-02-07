@@ -133,7 +133,7 @@ const handleLikeCount = (blog) => {
           setBlogs={setBlogs}
           setError={setError}
           user={user}
-      /></Togglable>}
+        /></Togglable>}
       {user && blogList(user)}
     </div>
   )

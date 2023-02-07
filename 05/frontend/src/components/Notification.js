@@ -4,7 +4,7 @@ const Notification = ({ errorMessage }) => {
   }
 
   return (
-    <div style={{color: "red", backgroundColor: "green", padding: "20px", fontSize: 25}} className="error">
+    <div style={{ color: "red", backgroundColor: "green", padding: "20px", fontSize: 25 }} className="error">
       {errorMessage}
     </div>
   )
