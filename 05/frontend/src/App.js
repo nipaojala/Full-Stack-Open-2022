@@ -113,6 +113,25 @@ const App = () => {
       </div>
     )
   }
+
+  const createBlog = (newBlogObj) => {
+    addFormRef.current.toggleVisibility()
+    blogService.create(newBlogObj, user.token)
+    .then(returnedBlog => {
+      setBlogs(blogs.concat(returnedBlog))
+      setError("adding blog was succesful")
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
+    })
+    .catch(exception => {
+      setError('something happened')
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
+    })
+  }
+
   return (
     <div>
       <Notification errorMessage={error}/>
@@ -127,6 +146,7 @@ const App = () => {
       {user && <div><h1>Blogs!</h1> Logged in as {user.name} <button onClick={handleLogout}>logout</button></div>}
       {user && <Togglable buttonLabel="create" ref={addFormRef}>
         <AddForm
+          createBlog={createBlog}
           addFormRef={addFormRef}
           blogs={blogs}
           setBlogs={setBlogs}

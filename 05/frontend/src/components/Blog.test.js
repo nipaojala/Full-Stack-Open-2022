@@ -50,7 +50,6 @@ describe('BlogPosts Component', () => {
       handleDelete={handleDelete}/>
       )
     
-    const mockHandler = jest.fn()
     const user = userEvent.setup()
     const button1 = screen.getByText('view')
     await user.click(button1)
@@ -59,5 +58,9 @@ describe('BlogPosts Component', () => {
     await user.click(button2)
 
     expect(handleLikeCount.mock.calls).toHaveLength(2)
+  })
+
+  test('clicking the button calls event handler twice', async () => {
+
   })
 })
