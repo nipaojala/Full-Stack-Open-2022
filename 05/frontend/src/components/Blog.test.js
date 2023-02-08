@@ -4,43 +4,42 @@ import { render, screen } from '@testing-library/react'
 import Blog from './Blog'
 import userEvent from '@testing-library/user-event'
 
-test('renders content', () => {
-  
+describe('BlogPosts Component', () => {
   const blog = {
     title: 'Component testing is done with react-testing-library',
-    author: 'test',
+    author: 'Niilo',
+    url: 'url',
+    likes: 8,
     user: {
       name: 'Niilo'
     }
   }
 
-  render(<Blog blog={blog} />)
+  const user2 = {
+    name: 'Niilo'
+  }
 
-  const element = screen.getByText('Component testing is done with react-testing-library', 'test')
-  expect(element).toBeDefined()
+  const handleLikeCount = jest.fn().mockName('handleLikeCount')
+  const handleDelete = jest.fn().mockName('handleDelete')
+
+  test('renders content', () => {
+
+    render(<Blog blog={blog} />)
+
+    const element = screen.getByText('Component testing is done with react-testing-library')
+    expect(element).toBeDefined()
+  })
+
+  test('clicking the button calls event handler once', async () => {
+    const { container } = render(<Blog blog={blog}
+      userName={user2.name}
+      handleLikeCount={handleLikeCount}
+      handleDelete={handleDelete}/>)
+
+    const user = userEvent.setup()
+    const button = screen.getByText('view')
+    await user.click(button)
+
+    expect(container).toHaveTextContent('url')
+  })
 })
-
-// test('clicking the button calls event handler once', async () => {
-//   const blog = {
-//     title: 'Component testing is done with react-testing-library',
-//     author: 'Niilo',
-//     url: 'url',
-//     likes: 8,
-//     user: {
-//       name: 'Niilo'
-//     }
-//   }
-
-//   const mockHandler = jest.fn()
-
-//   render(
-//     <Blog blog={blog} />
-//   )
-
-//   // const user = userEvent.setup()
-//   // const button = screen.getByText('show')
-//   // await user.click(button)
-
-//   const element = screen.getByText('Niilo', 'url')
-//   expect(element).toBeDefined()
-// })
