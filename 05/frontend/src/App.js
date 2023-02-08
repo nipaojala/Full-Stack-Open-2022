@@ -16,7 +16,7 @@ const App = () => {
 
   const addFormRef = useRef()
 
-  useEffect(() =>{
+  useEffect(() => {
     console.log("map user")
     const user = window.localStorage.getItem('loggedUser')
     if (user) setUser(JSON.parse(user))
@@ -26,14 +26,14 @@ const App = () => {
     console.log("map blogs")
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      console.log({username, password})
-      const user = await login.login({username, password})
+      console.log({ username, password })
+      const user = await login.login({ username, password })
       setUser(user)
       window.localStorage.setItem(
         "loggedUser", JSON.stringify(user)
@@ -45,58 +45,57 @@ const App = () => {
       setTimeout(() => {
         setError(null)
       }, 5000)
-      }
     }
+  }
 
-const handleLogout = () => {
-  window.localStorage.removeItem('loggedUser')
-  setUser(null)
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedUser')
+    setUser(null)
 
-}
+  }
 
-const handleLikeCount = (blog) => {
-  blog.likes = blog.likes + 1
-  blogService.updateLikes(user.token, blog)
-  .then(returnedBlog => {
-    console.log(returnedBlog)
-    const updatedLikes = {
-      title: returnedBlog.title,
-      url: returnedBlog.url,
-      author: returnedBlog.author,
-      likes: returnedBlog.likes,
-      user: {
-      username: user.username,
-      name: user.name,
-      id: returnedBlog.user
-      },
-      id: blog.id
-
-    }
-    setBlogs(blogs.map(element => element.id !== blog.id ? element :updatedLikes))
-  })
-  .catch(error => {
-    console.log(error)
-    setError('Adding like didnt work')
-    setTimeout(() => {
-      setError(null)
-    }, 5000)
-    })
+  const handleLikeCount = (blog) => {
+    blog.likes = blog.likes + 1
+    blogService.updateLikes(user.token, blog)
+      .then(returnedBlog => {
+        console.log(returnedBlog)
+        const updatedLikes = {
+          title: returnedBlog.title,
+          url: returnedBlog.url,
+          author: returnedBlog.author,
+          likes: returnedBlog.likes,
+          user: {
+            username: user.username,
+            name: user.name,
+            id: returnedBlog.user
+          },
+          id: blog.id
+        }
+        setBlogs(blogs.map(element => element.id !== blog.id ? element :updatedLikes))
+      })
+      .catch(error => {
+        console.log(error)
+        setError('Adding like didnt work')
+        setTimeout(() => {
+          setError(null)
+        }, 5000)
+      })
   }
 
   const handleDelete = (blog) => {
-    if (window.confirm(`Removing blog ${blog.title} by ${blog.author}`)) {   
-    blogService.deleteBlog(user.token, blog)
-    .then(returnedMessage => {
-      console.log(blogs)
-      setBlogs(blogs.filter(element => element.id !== blog.id))
-      console.log(blogs)
-    })
-    .catch(error => {
-      setError("removing blog post failed")
-      setTimeout(() => {
-        setError(null)
-      }, 5000)
-      })
+    if (window.confirm(`Removing blog ${blog.title} by ${blog.author}`)) {
+      blogService.deleteBlog(user.token, blog)
+        .then(() => {
+          console.log(blogs)
+          setBlogs(blogs.filter(element => element.id !== blog.id))
+          console.log(blogs)
+        })
+        .catch(() => {
+          setError("removing blog post failed")
+          setTimeout(() => {
+            setError(null)
+          }, 5000)
+        })
     }
   }
 
