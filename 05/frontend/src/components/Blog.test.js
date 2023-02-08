@@ -30,7 +30,7 @@ describe('BlogPosts Component', () => {
     expect(element).toBeDefined()
   })
 
-  test('clicking the button calls event handler once', async () => {
+  test('clicking the button shows hidden texts', async () => {
     const { container } = render(<Blog blog={blog}
       userName={user2.name}
       handleLikeCount={handleLikeCount}
@@ -41,5 +41,23 @@ describe('BlogPosts Component', () => {
     await user.click(button)
 
     expect(container).toHaveTextContent('url')
+  })
+  
+  test('clicking the button calls event handler twice', async () => {
+    render(<Blog blog={blog}
+      userName={user2.name}
+      handleLikeCount={handleLikeCount}
+      handleDelete={handleDelete}/>
+      )
+    
+    const mockHandler = jest.fn()
+    const user = userEvent.setup()
+    const button1 = screen.getByText('view')
+    await user.click(button1)
+    const button2 = screen.getByText('like')
+    await user.click(button2)
+    await user.click(button2)
+
+    expect(handleLikeCount.mock.calls).toHaveLength(2)
   })
 })
