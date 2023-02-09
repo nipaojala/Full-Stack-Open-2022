@@ -9,7 +9,9 @@ const App = ({store}) => {
       <button onClick={e => store.dispatch({type: 'RESET'})}>reset</button>
       <div>
         {/* {map.map(element => <p>{element}</p>)} */}
-        {store.getState().good}         {store.getState().bad}           {store.getState().ok}
+        good {store.getState().good}<br/>
+        bad {store.getState().bad}<br/>
+        ok {store.getState().ok}
       </div>
     </div>
   )

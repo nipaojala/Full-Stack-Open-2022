@@ -21,9 +21,6 @@ describe('unicafe reducer', () => {
 
   test('good is incremented', () => {
     const store = createStore(counterReducer)
-    const action = {
-      type: 'GOOD'
-    }
     const state = initialState
 
     deepFreeze(state)
