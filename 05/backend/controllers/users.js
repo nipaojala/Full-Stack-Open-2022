@@ -13,7 +13,7 @@ router.get('/', async (request, response) => {
 
 router.post('/', async (request, response) => {
   const { username, name, password } = request.body
-
+  console.log(username, password, name)
   if (!password || password.length<3) {
     return response.status(400).json({
       error: 'invalid password'

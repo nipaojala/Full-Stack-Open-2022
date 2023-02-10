@@ -7,13 +7,13 @@ const LoginForm = (props) => {
           <h1>Login to an application</h1>
           <div>
             Username
-            <input type="text" value={props.username} name="Username" onChange={({target}) => props.setUsername(target.value)}></input>
+            <input type="text" value={props.username} id = 'username' name="Username" onChange={({target}) => props.setUsername(target.value)}></input>
           </div>
           <div>
             Password
-            <input type="text" value={props.password} name="Password" onChange={({target}) => props.setPassword(target.value)}></input>
+            <input type="text" value={props.password} id = 'password' name="Password" onChange={({target}) => props.setPassword(target.value)}></input>
           </div>
-          <button type ="submit">login</button>
+          <button id="login-button" type ="submit">login</button>
         </form>
     </div>
   )

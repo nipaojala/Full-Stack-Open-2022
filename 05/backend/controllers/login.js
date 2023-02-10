@@ -6,7 +6,7 @@ const User = require('../models/user')
 router.post('/', async (request, response) => {
   console.log("some tried login")
   const { username, password } = request.body
-
+  console.log(username, password)
   const user = await User.findOne({ username })
   const passwordCorrect = user === null
     ? false
@@ -22,7 +22,7 @@ router.post('/', async (request, response) => {
     username: user.username,
     id: user._id,
   }
-
+  console.log('someone logged in')
   const token = jwt.sign(userForToken, process.env.SECRET)
 
   response
