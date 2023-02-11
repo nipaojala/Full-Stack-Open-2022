@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit'
+
 const anecdotesAtStart = [
       'If it hurts, do it more often',
       'Adding manpower to a late software project makes it later!',
@@ -19,33 +21,52 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const anecdoteReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'ADDVOTE':
-      const newState = state.find(element => element.id === action.payload.id)
+const anecdoteSlice = createSlice({
+  name: 'anecdotes',
+  initialState,
+  reducers: {
+    addAnecdote(state, action) {
+      state.push(asObject(action.payload))
+    },
+    addVote(state, action) {
+      const id = action.payload
+      const newState = state.find(element => id === element.id)
       const returnedState = { ...newState, votes: newState.votes + 1}
       return state.map(element =>
-        element.id !== action.payload.id ? element : returnedState 
+        element.id !== id ? element : returnedState 
       )
-    case 'ADDANECDOTE':
-      return [...state, asObject(action.payload.value)]
-    default:
-      return state
+    }
   }
-}
+})
 
-export const addVote = (id) => {
-  return {
-    type: 'ADDVOTE',
-    payload: { id }
-  }
-}
+// const anecdoteReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case 'ADDVOTE':
+//       const newState = state.find(element => element.id === action.payload.id)
+//       const returnedState = { ...newState, votes: newState.votes + 1}
+//       return state.map(element =>
+//         element.id !== action.payload.id ? element : returnedState 
+//       )
+//     case 'ADDANECDOTE':
+//       return [...state, asObject(action.payload.value)]
+//     default:
+//       return state
+//   }
+// }
 
-export const addAnecdote = (value) => {
-  return {
-    type: 'ADDANECDOTE',
-    payload: { value }
-  }
-}
+// export const addVote = (id) => {
+//   return {
+//     type: 'ADDVOTE',
+//     payload: { id }
+//   }
+// }
 
-export default anecdoteReducer
+// export const addAnecdote = (value) => {
+//   return {
+//     type: 'ADDANECDOTE',
+//     payload: { value }
+//   }
+// }
+
+export const { addAnecdote, addVote, filter } = anecdoteSlice.actions
+export default anecdoteSlice.reducer
