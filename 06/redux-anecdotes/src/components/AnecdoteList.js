@@ -8,7 +8,7 @@ const AnecdoteList = () => {
 
   const dispatch = useDispatch()
 
-  const vote = (anecdote) => {
+  const vote = async (anecdote) => {
     dispatch(addVote(anecdote.id))
     dispatch(addNotification("You voted " + anecdote.content))
     setTimeout(() => {
