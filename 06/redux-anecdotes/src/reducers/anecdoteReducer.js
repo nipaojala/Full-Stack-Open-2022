@@ -43,7 +43,7 @@ const anecdoteSlice = createSlice({
   }
 })
 
-export const initialAnecdotes = content => {
+export const initialAnecdotes = () => {
   return async dispatch => {
     const anecdotes = await anecdoteService.getAll()
     dispatch(setAnecdotes(anecdotes))
