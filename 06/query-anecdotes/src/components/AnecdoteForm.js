@@ -1,4 +1,4 @@
-import { QueryClient, useMutation, useQueryClient } from "react-query"
+import { useMutation, useQueryClient } from "react-query"
 import { create } from "../requests"
 
 const AnecdoteForm = () => {
@@ -17,12 +17,6 @@ const newAnecdoteMutation = useMutation(create, {
     queryClient.setQueryData('anecdotes', anecdotes.concat(newAnecdote))
   }
 })
-
-  const updateAnecdoteMutation = useMutation(create, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('anecdote')
-    }
-  })
 
   return (
     <div>

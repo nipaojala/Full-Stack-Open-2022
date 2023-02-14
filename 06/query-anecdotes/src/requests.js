@@ -8,3 +8,7 @@ export const getAll = () => {
 export const create = (anecdote) => {
   return axios.post(baseUrl, anecdote).then(res => res.data)
 }
+
+export const update = (anecdote) => {
+  return axios.put(baseUrl + '/' + anecdote.id, anecdote).then(res => res.data)
+}
