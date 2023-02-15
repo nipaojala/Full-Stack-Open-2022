@@ -2,8 +2,6 @@ import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { getAll, update } from './requests'
-import Button from './components/Button'
-import Display from './components/Display'
 import { useCounterDispatch } from './CounterContext'
 
 const App = () => {
