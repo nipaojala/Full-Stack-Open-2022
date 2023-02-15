@@ -1,3 +1,6 @@
+import { useCounterValue } from "../CounterContext"
+
+
 const Notification = () => {
   const style = {
     border: 'solid',
@@ -5,12 +8,9 @@ const Notification = () => {
     borderWidth: 1,
     marginBottom: 5
   }
-  
-  if (true) return null
-
   return (
     <div style={style}>
-      
+    {useCounterValue()}
     </div>
   )
 }
